@@ -1,0 +1,8 @@
+${Ansi.GREEN}    _           _
+${Ansi.GREEN}   (_)         | |
+${Ansi.GREEN}    _  ___  ___| |_ ___ _ __
+${Ansi.GREEN}   | |/ _ \/ __| __/ _ \ '__|
+${Ansi.GREEN}   | |  __/\__ \ ||  __/ |
+${Ansi.GREEN}   | |\___||___/\__\___|_|
+${Ansi.GREEN}  _/ |
+${Ansi.GREEN} |__/
