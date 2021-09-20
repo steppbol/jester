@@ -12,13 +12,15 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 
 @Configuration
 public class NoteRouter {
+    private static final String NOTE_ROUTE = "/api/v1/notes";
+
     @Bean
     public RouterFunction<ServerResponse> route(NoteHandler noteHandler) {
         return RouterFunctions.route()
-                .POST("/notes", accept(APPLICATION_JSON), noteHandler::create)
-                .PUT("/notes/{id}", accept(APPLICATION_JSON), noteHandler::update)
-                .GET("/notes/{id}", accept(APPLICATION_JSON), noteHandler::get)
-                .DELETE("/notes/{id}", accept(APPLICATION_JSON), noteHandler::delete)
+                .POST(NOTE_ROUTE, accept(APPLICATION_JSON), noteHandler::create)
+                .PUT(NOTE_ROUTE.concat("/{id}"), accept(APPLICATION_JSON), noteHandler::update)
+                .GET(NOTE_ROUTE.concat("/{id}"), accept(APPLICATION_JSON), noteHandler::get)
+                .DELETE(NOTE_ROUTE.concat("/{id}"), accept(APPLICATION_JSON), noteHandler::delete)
                 .build();
     }
 }

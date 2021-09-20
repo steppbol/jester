@@ -1,1 +1,18 @@
+server:
+  port: 8088
 
+spring:
+  r2dbc:
+    username: ${DATABASE_USERNAME:postgres}
+    password: ${DATABASE_PASSWORD:1234}
+    url: r2dbc:postgresql://${DATABASE_URL:localhost:5432/jester}
+    pool:
+      enabled: true
+      initial-size: 10
+      max-idle-time: 1m
+      max-size: 30
+  flyway:
+    url: ${spring.r2dbc.url}
+    user: ${spring.r2dbc.username}
+    password: ${spring.r2dbc.password}
+    locations: classpath:db/migration

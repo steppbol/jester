@@ -11,6 +11,8 @@ import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 import static org.springframework.web.reactive.function.server.ServerResponse.notFound;
 import static org.springframework.web.reactive.function.server.ServerResponse.ok;
 
@@ -39,7 +41,7 @@ public class DefaultNoteHandler implements NoteHandler {
 
     @Override
     public Mono<ServerResponse> update(ServerRequest serverRequest) {
-        return noteService.update(Integer.valueOf(serverRequest.pathVariable("id")), serverRequest.bodyToMono(Note.class))
+        return noteService.update(UUID.fromString(serverRequest.pathVariable("id")), serverRequest.bodyToMono(Note.class))
                 .flatMap(note ->
                         ok()
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -53,7 +55,7 @@ public class DefaultNoteHandler implements NoteHandler {
 
     @Override
     public Mono<ServerResponse> get(ServerRequest serverRequest) {
-        return noteService.get(Integer.valueOf(serverRequest.pathVariable("id")), serverRequest.bodyToMono(Note.class))
+        return noteService.get(UUID.fromString(serverRequest.pathVariable("id")))
                 .flatMap(note ->
                         ok()
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -67,7 +69,7 @@ public class DefaultNoteHandler implements NoteHandler {
 
     @Override
     public Mono<ServerResponse> delete(ServerRequest serverRequest) {
-        return noteService.delete(Integer.valueOf(serverRequest.pathVariable("id")))
+        return noteService.delete(UUID.fromString(serverRequest.pathVariable("id")))
                 .flatMap(note ->
                         ok()
                                 .contentType(MediaType.APPLICATION_JSON)
