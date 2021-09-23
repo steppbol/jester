@@ -33,7 +33,7 @@ public class DefaultNoteService implements NoteService {
 
     @Override
     public Mono<Note> get(UUID id) {
-        return noteRepository.findById(id);
+        return noteRepository.getById(id);
     }
 
     @Override

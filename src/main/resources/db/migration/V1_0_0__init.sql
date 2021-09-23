@@ -1,17 +1,22 @@
-create table if not exists 'notes' (
-    id uuid not null default uuid_generate_v4(),
-    name not null text,
-    context not null text,
-    description text,
-    createdDate timestamp without time zone,
-    updatedDate timestamp without time zone,
-    constraint notes_pkey primary key (id)
-)
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
-create table if not exists 'attributes' (
-    id uuid not null default uuid_generate_v4(),
-    id uuid not null,
-    name not null text,
-    value not null text,
-    constraint attributes_pkey primary key (id)
-)
+CREATE TABLE IF NOT EXISTS notes
+(
+    id           uuid NOT NULL DEFAULT uuid_generate_v4(),
+    name         text NOT NULL,
+    context      text NOT NULL,
+    description  text,
+    created_date TIMESTAMP WITHOUT TIME ZONE,
+    updated_date TIMESTAMP WITHOUT TIME ZONE,
+    CONSTRAINT notes_pk PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS attributes
+(
+    id      uuid NOT NULL DEFAULT uuid_generate_v4(),
+    note_id uuid NOT NULL,
+    name    text NOT NULL,
+    value   text NOT NULL,
+    CONSTRAINT attributes_pk PRIMARY KEY (id),
+    CONSTRAINT notes_fk FOREIGN KEY (note_id) REFERENCES notes (id)
+);
