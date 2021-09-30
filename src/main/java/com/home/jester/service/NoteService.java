@@ -1,16 +1,15 @@
 package com.home.jester.service;
 
 import com.home.jester.entity.Note;
-import reactor.core.publisher.Mono;
 
 import java.util.UUID;
 
 public interface NoteService {
-    Mono<Note> create(Mono<Note> note);
+    UUID create(Note note);
 
-    Mono<Note> update(UUID id, Mono<Note> note);
+    Note update(UUID id, Note note);
 
-    Mono<Note> get(UUID id);
+    Note get(UUID id);
 
-    Mono<Void> delete(UUID id);
+    void delete(UUID id);
 }

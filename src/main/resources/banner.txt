@@ -1,8 +1,8 @@
-${Ansi.GREEN}    _           _
-${Ansi.GREEN}   (_)         | |
-${Ansi.GREEN}    _  ___  ___| |_ ___ _ __
-${Ansi.GREEN}   | |/ _ \/ __| __/ _ \ '__|
-${Ansi.GREEN}   | |  __/\__ \ ||  __/ |
-${Ansi.GREEN}   | |\___||___/\__\___|_|
-${Ansi.GREEN}  _/ |
-${Ansi.GREEN} |__/
+${AnsiColor.BLUE}    _           _
+${AnsiColor.BLUE}   (_)         | |
+${AnsiColor.BLUE}    _  ___  ___| |_ ___ _ __
+${AnsiColor.BLUE}   | |/ _ \/ __| __/ _ \ '__|
+${AnsiColor.BLUE}   | |  __/\__ \ ||  __/ |
+${AnsiColor.BLUE}   | |\___||___/\__\___|_|
+${AnsiColor.BLUE}  _/ |
+${AnsiColor.BLUE} |__/

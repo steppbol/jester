@@ -1,3 +1,7 @@
+.idea/
+target/
+out/
+
 *.class
 *.log
 *.ctxt
@@ -9,12 +13,3 @@
 *.tar.gz
 *.rar
 *.iws
-
-.idea/
-/build/
-out/
-
-.gradle
-gradle-app.setting
-!gradle-wrapper.jar
-.gradletasknamecache
