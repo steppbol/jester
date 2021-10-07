@@ -1,10 +1,9 @@
 package com.home.jester.entity;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -15,18 +14,23 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
-@Data
+@Getter
+@Setter
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-@EqualsAndHashCode(callSuper = true)
 @EntityListeners(AuditingEntityListener.class)
+@NamedEntityGraph(name = "note.attributes",
+        attributeNodes = @NamedAttributeNode("attributes")
+)
 @Entity
 @Table(name = "notes")
 public class Note extends BaseEntity {
@@ -45,5 +49,35 @@ public class Note extends BaseEntity {
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     @JoinColumn(name = "note_id", nullable = false)
     private List<Attribute> attributes;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Note note = (Note) o;
+        return Objects.equals(name, note.name)
+               && Objects.equals(context, note.context)
+               && Objects.equals(description, note.description)
+               && Objects.equals(createdDate, note.createdDate)
+               && Objects.equals(updatedDate, note.updatedDate)
+               && Objects.equals(attributes, note.attributes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), name, context, description, createdDate, updatedDate, attributes);
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "(" +
+               "id = " + getId() + ", " +
+               "name = " + getName() + ", " +
+               "context = " + getContext() + ", " +
+               "description = " + getDescription() + ", " +
+               "createdDate = " + getCreatedDate() + ", " +
+               "updatedDate = " + getUpdatedDate() + ")";
+    }
 }
 

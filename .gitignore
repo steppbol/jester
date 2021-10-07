@@ -2,6 +2,11 @@
 target/
 out/
 
+metrics/
+!metrics/grafana/provisioning/
+!metrics/prometheus/prometheus.yml
+!metrics/docker-compose.yaml
+
 *.class
 *.log
 *.ctxt

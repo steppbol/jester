@@ -6,8 +6,23 @@ spring:
     username: ${DATABASE_USERNAME:postgres}
     password: ${DATABASE_PASSWORD:1234}
     url: jdbc:postgresql://${DATABASE_URL:localhost:5432/jester}
+  jpa:
+    open-in-view: false
   flyway:
     url: ${spring.datasource.url}
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
     locations: classpath:db/migration
+management:
+  endpoints:
+    web:
+      base-path: ${MONITOR_PATH:/api/v1/jester/monitor}
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    distribution:
+      percentiles-histogram:
+        "[http.server.requests]": true

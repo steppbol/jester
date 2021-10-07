@@ -1,31 +1,47 @@
 package com.home.jester.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Version;
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
 @SuperBuilder
+@AllArgsConstructor
 @NoArgsConstructor
-@ToString
-@EqualsAndHashCode
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable {
     @Id
     @Column(name = "id")
     @GeneratedValue
     private UUID id;
-    @Version
-    @Column(name = "version")
-    private Long version;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BaseEntity that = (BaseEntity) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "(" +
+               "id = " + getId() + ")";
+    }
 }

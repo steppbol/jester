@@ -22,22 +22,26 @@ public class DefaultNoteService implements NoteService {
 
     @Override
     public UUID create(Note note) {
+        log.info("Creating note");
         return noteRepository.save(note).getId();
     }
 
     @Override
     public Note update(UUID id, Note note) {
+        log.info("Updating note. ID: {}", id);
         note.setId(id);
         return noteRepository.save(note);
     }
 
     @Override
     public Note get(UUID id) {
+        log.info("Getting note. ID: {}", id);
         return noteRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
     public void delete(UUID id) {
+        log.info("Deleting note. ID: {}", id);
         noteRepository.deleteById(id);
     }
 }

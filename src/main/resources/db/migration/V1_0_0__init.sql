@@ -1,7 +1,6 @@
 CREATE TABLE IF NOT EXISTS notes
 (
     id           uuid                     NOT NULL,
-    version      bigint                   NOT NULL,
     name         text                     NOT NULL,
     context      text                     NOT NULL,
     description  text,
@@ -13,7 +12,6 @@ CREATE TABLE IF NOT EXISTS notes
 CREATE TABLE IF NOT EXISTS attributes
 (
     id      uuid   NOT NULL,
-    version bigint NOT NULL,
     note_id uuid   NOT NULL,
     name    text   NOT NULL,
     value   text   NOT NULL,
