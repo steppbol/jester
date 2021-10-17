@@ -23,6 +23,9 @@ management:
     health:
       show-details: always
   metrics:
+    export:
+      prometheus:
+        enabled: true
     distribution:
       percentiles-histogram:
         "[http.server.requests]": true
