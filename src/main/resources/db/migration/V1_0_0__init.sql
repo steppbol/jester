@@ -11,10 +11,10 @@ CREATE TABLE IF NOT EXISTS notes
 
 CREATE TABLE IF NOT EXISTS attributes
 (
-    id      uuid   NOT NULL,
-    note_id uuid   NOT NULL,
-    name    text   NOT NULL,
-    value   text   NOT NULL,
+    id      uuid NOT NULL,
+    note_id uuid NOT NULL,
+    name    text NOT NULL,
+    value   text NOT NULL,
     CONSTRAINT attributes_pk PRIMARY KEY (id),
     CONSTRAINT notes_fk FOREIGN KEY (note_id) REFERENCES notes (id)
 );
