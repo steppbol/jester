@@ -6,6 +6,7 @@ metrics/
 !metrics/grafana/provisioning/
 !metrics/prometheus/prometheus.yml
 !metrics/docker-compose.yaml
+!metrics/jmeter
 
 *.class
 *.log

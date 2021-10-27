@@ -8,6 +8,7 @@ spring:
     url: jdbc:postgresql://${DATABASE_URL:localhost:5432/jester}
   jpa:
     open-in-view: false
+    show-sql: ${SHOW_SQL:false}
   flyway:
     url: ${spring.datasource.url}
     user: ${spring.datasource.username}

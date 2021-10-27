@@ -1,7 +1,8 @@
 package com.home.jester.controller.v1;
 
-import com.home.jester.entity.Note;
+import com.home.jester.dto.NoteDto;
 import com.home.jester.service.NoteService;
+import com.home.jester.util.NoteMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,26 +23,28 @@ import static com.home.jester.controller.ApiPath.V1_PATH;
 @RestController
 @RequestMapping(API_PATH + V1_PATH + JESTER_PATH + NOTES_PATH)
 public class NoteController {
+    private final NoteMapper noteMapper;
     private final NoteService noteService;
 
     @Autowired
-    public NoteController(NoteService noteService) {
+    public NoteController(NoteMapper noteMapper, NoteService noteService) {
+        this.noteMapper = noteMapper;
         this.noteService = noteService;
     }
 
     @PostMapping
-    public UUID create(@RequestBody Note note) {
-        return noteService.create(note);
+    public UUID create(@RequestBody NoteDto noteDto) {
+        return noteService.create(noteMapper.fromDto(noteDto));
     }
 
     @PutMapping("{id}")
-    public Note update(@PathVariable("id") UUID id, @RequestBody Note note) {
-        return noteService.update(id, note);
+    public NoteDto update(@PathVariable("id") UUID id, @RequestBody NoteDto noteDto) {
+        return noteMapper.toDto(noteService.update(id, noteMapper.fromDto(noteDto)));
     }
 
     @GetMapping("{id}")
-    public Note get(@PathVariable("id") UUID id) {
-        return noteService.get(id);
+    public NoteDto get(@PathVariable("id") UUID id) {
+        return noteMapper.toDto(noteService.get(id));
     }
 
     @DeleteMapping("{id}")

@@ -1,10 +1,12 @@
 package com.home.jester.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
+import org.hibernate.Hibernate;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -18,13 +20,13 @@ import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;
 
 @Getter
 @Setter
-@SuperBuilder
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
@@ -32,6 +34,7 @@ import java.util.Objects;
         attributeNodes = @NamedAttributeNode("attributes")
 )
 @Entity
+@DynamicUpdate
 @Table(name = "notes")
 public class Note extends BaseEntity {
     @Column(name = "name", nullable = false)
@@ -42,10 +45,10 @@ public class Note extends BaseEntity {
     private String description;
     @CreatedDate
     @Column(name = "created_date", nullable = false, updatable = false)
-    private LocalDateTime createdDate;
+    private ZonedDateTime createdDate;
     @LastModifiedDate
     @Column(name = "updated_date", nullable = false)
-    private LocalDateTime updatedDate;
+    private ZonedDateTime updatedDate;
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     @JoinColumn(name = "note_id", nullable = false)
     private List<Attribute> attributes;
@@ -53,20 +56,16 @@ public class Note extends BaseEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         Note note = (Note) o;
-        return Objects.equals(name, note.name)
-               && Objects.equals(context, note.context)
-               && Objects.equals(description, note.description)
-               && Objects.equals(createdDate, note.createdDate)
-               && Objects.equals(updatedDate, note.updatedDate)
-               && Objects.equals(attributes, note.attributes);
+        return getId() != null && Objects.equals(getId(), note.getId())
+               && Objects.equals(getName(), note.getName())
+               && Objects.equals(getContext(), note.getContext());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), name, context, description, createdDate, updatedDate, attributes);
+        return Objects.hash(super.hashCode(), getId(), getName(), getContext());
     }
 
     @Override
